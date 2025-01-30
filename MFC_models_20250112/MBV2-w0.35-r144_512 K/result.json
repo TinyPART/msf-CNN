@@ -1,0 +1,1 @@
+{"Model": "MBV2-w0.35-r144", "Optimizer": "Min MAC", "Configuration": "512 K", "Fusion Network Memory Usage": "Same as 256 K", "Fusion Range": "", "Total": "Same as 256 K", "Common": "Same as 256 K", "Redundant": "Same as 256 K", "Redundant Rate": "Same as 256 K", "Overhead Factor": "Same as 256 K", "peak_mem_usage": 194400}

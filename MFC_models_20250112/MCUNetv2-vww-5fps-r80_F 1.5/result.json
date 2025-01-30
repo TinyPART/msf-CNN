@@ -1,0 +1,1 @@
+{"Model": "MCUNetv2-vww-5fps-r80", "Optimizer": "Min PeakMEM", "Configuration": "F 1.5", "Fusion Network Memory Usage": "Same as F 1.4", "Fusion Range": "", "Total": "Same as F 1.4", "Common": "Same as F 1.4", "Redundant": "Same as F 1.4", "Redundant Rate": "Same as F 1.4", "Overhead Factor": "Same as F 1.4", "peak_mem_usage": 96000}

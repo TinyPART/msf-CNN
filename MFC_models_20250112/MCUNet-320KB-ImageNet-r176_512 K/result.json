@@ -1,0 +1,1 @@
+{"Model": "MCUNet-320KB-ImageNet-r176", "Optimizer": "Min MAC", "Configuration": "512 K", "Fusion Network Memory Usage": "[same as 256 K]", "Fusion Range": "", "Total": "-", "Common": "-", "Redundant": "-", "Redundant Rate": "-", "Overhead Factor": "-", "peak_mem_usage": 309760}

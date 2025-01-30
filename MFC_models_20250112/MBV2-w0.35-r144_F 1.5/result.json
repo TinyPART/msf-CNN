@@ -1,0 +1,1 @@
+{"Model": "MBV2-w0.35-r144", "Optimizer": "Min PeakMEM", "Configuration": "F 1.5", "Fusion Network Memory Usage": "Same as 1.4", "Fusion Range": "", "Total": "Same as 1.4", "Common": "Same as 1.4", "Redundant": "Same as 1.4", "Redundant Rate": "Same as 1.4", "Overhead Factor": "Same as 1.4", "peak_mem_usage": 194400}
