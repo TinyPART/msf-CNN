@@ -3,7 +3,6 @@ import math
 import numpy as np
 from .fusion_cost_graph import MemoryUsageEstimator, FusionCostGraphProducer, MACEstimator
 from .minimax_memory_optimizer import find_minimax_path, find_shortest_path
-# from .find_k_shortest_paths import find_k_shortest_paths_under_weight_sum_threshold
 from .utils import from_path_to_fusion_setting
 
 class MinimaxPathOptimizer:
@@ -29,6 +28,7 @@ class MinimizeMACstPeakMEMOptimizer:
         fusion_mac_graph = np.array(FusionCostGraphProducer(MACEstimator).create_graph(layers, input_tensor))
         above_mem_th_idx = np.nonzero(fusion_mem_graph > peak_mem_th)
         fusion_mac_graph[above_mem_th_idx] = math.inf
+        fusion_mem_graph[above_mem_th_idx] = math.inf
         N = len(layers)
 
         cur_peak_mem = np.max(fusion_mem_graph[fusion_mem_graph != np.inf])
@@ -52,10 +52,7 @@ class MinimizeMACstPeakMEMOptimizer:
             cur_peak_mem = np.max(temp)
         
         
-        # min_mac, opt_path = find_shortest_path(fusion_mac_graph, 0, N)
-
-
-        print(f'[MinimizeMACstPeakMEMOptimizer] Layer Num: {N}, Opt Path: {opt_path}, Cost: {cur_mac}')
+        # print(f'[MinimizeMACstPeakMEMOptimizer] Layer Num: {N}, Opt Path: {opt_path}, Cost: {cur_mac}')
         # opt_path = [0, 1, 2, 4, 5, 6, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35, 38, 41, 44, 47, 50, 53]
         return cur_mac, from_path_to_fusion_setting(opt_path)
     
@@ -74,7 +71,7 @@ class MinimizePeakMEMstMOFOptimizer:
         common_network.forward(input_tensor)
         common_mac = common_network.total_common_mac
         maximum_mac = common_mac * mof_th
-        print(f"common mac: {common_mac}, maximum mac: {maximum_mac}")
+        # print(f"common mac: {common_mac}, maximum mac: {maximum_mac}")
         fusion_mac = math.inf
         N = len(layers)
         
@@ -88,10 +85,11 @@ class MinimizePeakMEMstMOFOptimizer:
         while True:
             fusion_mac, p = find_shortest_path(fusion_mac_graph, 0, N)
 
-            if fusion_mac <= maximum_mac and cur_peak_mem < min_mem and p is not []:
+            if fusion_mac <= maximum_mac and cur_peak_mem < min_mem and len(p) != 0:
                 opt_path = p
                 min_mem = cur_peak_mem
                 cur_mac = fusion_mac
+                # print(f"fusion mac: {fusion_mac}, opt_path: {opt_path}, min_mem: {min_mem}")
 
             above_mem_th_idx = np.nonzero(fusion_mem_graph >= cur_peak_mem)
             fusion_mac_graph[above_mem_th_idx] = math.inf
@@ -103,6 +101,21 @@ class MinimizePeakMEMstMOFOptimizer:
              
         # paths = find_k_shortest_paths_under_weight_sum_threshold(fusion_mac_graph, 0, N, maximum_mac)
         return min_mem, from_path_to_fusion_setting(opt_path)
+
+class MCUNetOptimizer:
+    def __init__(self):
+        pass
+
+    def optimize(self, layers, input_tensor):
+        graph_producer = FusionCostGraphProducer(MemoryUsageEstimator)
+        fusion_mem_graph = graph_producer.create_graph(layers, input_tensor)
+        fusion_mem_graph = np.array(fusion_mem_graph)
+        N = len(layers)
+        for i in range(1, N):
+            fusion_mem_graph[i, i+2:] = np.inf
+        mem_usage, opt_path = find_minimax_path(fusion_mem_graph, 0, N)
+        print(f'Layer Num: {N}, Opt Path: {opt_path}')
+        return mem_usage, from_path_to_fusion_setting(opt_path)
 
 
         

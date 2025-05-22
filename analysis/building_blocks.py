@@ -1,7 +1,10 @@
 import numpy as np
 from collections import defaultdict
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from functools import reduce
+import logging
+# logger = logging.getLogger(__name__)
+logger = logging
 
 class FakeTensor:
     def __init__(self, shape):
@@ -434,11 +437,11 @@ class Network:
             memory_usage = max(memory_usage, current_mem_usage)          
             
             if isinstance(l, Layer):
-                print(f"layer {i} mem usage: {current_mem_usage} \t",
-                      f"input shape: {l.common_input_shape} \t size: {l.common_input_size} \t",
+                logger.info(f"layer {i} mem usage: {current_mem_usage} \t" +
+                      f"input shape: {l.common_input_shape} \t size: {l.common_input_size} \t" +
                       f"output shape: {l.common_output_shape} \t size: {l.common_output_size}")
             else:
-                print(f"layer {i} mem usage: {current_mem_usage} \t",
+                logger.info(f"layer {i} mem usage: {current_mem_usage} \t" +
                       f"output shape: {l.aggregated_output_shape} \t size: {l.aggregated_output_size}")
         return memory_usage
 
