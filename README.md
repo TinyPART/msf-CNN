@@ -1,5 +1,7 @@
 # msf-CNN: Patch-based Multi-Stage Fusion with Convolutional Neural Networks for TinyML
 
+For more information on this work, please read our preprint on [alphaXiv](https://www.alphaxiv.org/abs/2505.11483) or [arXiv](https://www.arxiv.org/abs/2505.11483).
+
 ## Reproduce analytical results
 
 1. install python packages using requirement.txt
@@ -19,7 +21,7 @@ options:
 
 ## Reproduce Experimental Results on MCU
 
-The experiments were conducted via RIOT-ML. To reproduce the results it is required to get RIOT-ML ready.
+The experiments were conducted via [RIOT-ML](https://github.com/TinyPART/RIOT-ML/). To reproduce the results it is required to get RIOT-ML ready.
 
 0. Go get a IoT board e.g. [STM32 nucleo-f767zi](https://www.st.com/en/evaluation-tools/nucleo-f767zi.html). Connect the IoT board to your PC.
 1. Clone the RIOT-ML from https://github.com/TinyPART/RIOT-ML/.
